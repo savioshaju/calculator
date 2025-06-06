@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div class="container d-flex flex-column justify-content-center align-items-center mt-5">
+        <div class="row d-flex border border-primary rounded p-3 flex-column justify-content-center align-items-center "
+            style="width: 400px;">
+            <div class="col-12  px-3 ">
+
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control text-end " id="screen" placeholder="name@example.com"
+                    style="overflow-x: auto; white-space: nowrap;">
+                <label for="screen" class="container-fluid text-end" id="screentop"
+                    style="overflow-x: auto; white-space: nowrap;"></label>
+            </div>
+            <div class="circle-container ps-4">
+                <button class="circle-btn" id="sq">x²</button>
+                <button class="circle-btn" id="cube">x³</button>
+                <button class="circle-btn" id="pow">xⁿ</button>
+                <button class="circle-btn" id="openpara">(</button>
+                <button class="circle-btn" id="closepara">)</button>
+                <button class="circle-btn" id="backspace">⌫</button>
+            </div>
+
+            <div class="row gap-2 mb-2">
+                <div class="col-3 btn btn-primary" id="one">1</div>
+                <div class="col-3 btn btn-primary" id="two">2</div>
+                <div class="col-3 btn btn-primary" id="three">3</div>
+                <div class="col-2 btn btn-primary" id="cls">AC</div>
+            </div>
+
+            <div class="row gap-2 mb-2">
+                <div class="col-3 btn btn-primary" id="four">4</div>
+                <div class="col-3 btn btn-primary" id="five">5</div>
+                <div class="col-3 btn btn-primary" id="six">6</div>
+                <div class="col-2 btn btn-primary" id="add">+</div>
+            </div>
+
+            <div class="row gap-2 mb-2">
+                <div class="col-3 btn btn-primary" id="seven">7</div>
+                <div class="col-3 btn btn-primary" id="eight">8</div>
+                <div class="col-3 btn btn-primary" id="nine">9</div>
+                <div class="col-2 btn btn-primary" id="sub">-</div>
+            </div>
+
+            <div class="row gap-2 mb-2">
+                <div class="col-3 btn btn-primary" id="zero">0</div>
+                <div class="col-3 btn btn-primary" id="mul">*</div>
+                <div class="col-3 btn btn-primary" id="divd">/</div>
+                <div class="col-2 btn btn-primary" id="eql">=</div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        MAX_LENGTH = 15;
+        const one = document.getElementById('one');
+        const two = document.getElementById('two');
+        const three = document.getElementById('three');
+        const four = document.getElementById('four');
+        const five = document.getElementById('five');
+        const six = document.getElementById('six');
+        const seven = document.getElementById('seven');
+        const eight = document.getElementById('eight');
+        const nine = document.getElementById('nine');
+        const zero = document.getElementById('zero');
+
+        const add = document.getElementById('add');
+        const sub = document.getElementById('sub');
+        const mul = document.getElementById('mul');
+        const divd = document.getElementById('divd');
+        const cls = document.getElementById('cls');
+        const eql = document.getElementById('eql');
+        const screen = document.getElementById('screen')
+        const screentop = document.getElementById('screentop')
+        const sq = document.getElementById('sq');
+        const cube = document.getElementById('cube');
+        const pow = document.getElementById('pow');
+        const openpara = document.getElementById('openpara');
+        const closepara = document.getElementById('closepara');
+        const backspace =document.getElementById('backspace')
+        
+        let exp = ''
+
+        const initialise = (val) => {
+            screen.value += val
+            exp += val
+            screen.value = screen.value.length > MAX_LENGTH ? screen.value.slice(-MAX_LENGTH) : screen.value;
+        }
+        one.addEventListener('click', () => initialise('1'));
+        two.addEventListener('click', () => initialise('2'));
+        three.addEventListener('click', () => initialise('3'));
+        four.addEventListener('click', () => initialise('4'));
+        five.addEventListener('click', () => initialise('5'));
+        six.addEventListener('click', () => initialise('6'));
+        seven.addEventListener('click', () => initialise('7'));
+        eight.addEventListener('click', () => initialise('8'));
+        nine.addEventListener('click', () => initialise('9'));
+        zero.addEventListener('click', () => initialise('0'));
+        add.addEventListener('click', () => initialise('+'));
+        sub.addEventListener('click', () => initialise('-'));
+        mul.addEventListener('click', () => initialise('*'));
+        divd.addEventListener('click', () => initialise('/'));
+        openpara.addEventListener('click', () => initialise('('));
+        closepara.addEventListener('click', () => initialise(')'));
+        cls.addEventListener('click', () => {
+            screen.value = ''
+            exp = ''
+            screentop.innerHTML = ''
+        });
+        sq.addEventListener('click', () => {
+            screen.value += '^2';
+            exp += '**2'
+        });
+
+        cube.addEventListener('click', () => {
+            screen.value += '^3';
+            exp += '**3';
+        });
+
+        pow.addEventListener('click', () => {
+            screen.value += '^';
+            exp += '**';
+        });
+        backspace.addEventListener('click', () => {
+            screen.value = screen.value.slice(0, -1);  
+            exp = exp.slice(0, -1);                     
+        });
+
+        eql.addEventListener('click', () => {
+            screentop.innerHTML = screen.value.length > MAX_LENGTH ? screen.value.slice(-MAX_LENGTH) : screen.value;
+
+            try {
+                console.log(exp)
+                screen.value = eval(exp);
+                exp = screen.value
+                console.log(screen.value)
+            } catch (error) {
+                screen.value = 'Error';
+            }
+        })
+    </script>
+</body>
+
+</html>
